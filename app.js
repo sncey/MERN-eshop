@@ -3,6 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv/config');
+
+app.use(cors());
+app.options('*', cors());
 
 
 require('dotenv/config');
@@ -14,6 +19,8 @@ const productsRouter = require('./routers/products');
 //middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+
+
 
 
 //Routers
@@ -38,8 +45,12 @@ mongoose.connect(process.env.CONNECTION_STRING, {
     console.log(err);
 })
 
+app.use('/', productsRoutes);
+
 //Server
-app.listen(3000, () => {
+app.listen(3001, () => {
     
-    console.log('Server is running on http://localhost:3000');
+    console.log('Server is running on http://localhost:3001');
 });
+
+
